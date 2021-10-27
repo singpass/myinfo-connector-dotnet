@@ -26,10 +26,9 @@ namespace sg.gov.ndi;
 You are required to create a config file with the following key values for this library. Sample config files can be found in this repository under the Sample Configuration folder.
 | Required config values | Description |
 | -------- | ----------- |
-| KEYSTORE | Absolute path of the .p12 file that holds the private key. |
-| KEYSTORE_PASSPHRASE | Password of your private key p12 file. |
-| KEYSTORE_PUBLIC | Absolute path of the .p12 file that holds public key/cert.  |
-| KEYSTORE_PASSPHRASE_PUBLIC | Password of the public key. |
+| CLIENT_SECURE_CERT | Absolute path of the .p12 file that holds the private key. |
+| CLIENT_SECURE_CERT_PASSPHRASEE | Password of your private key p12 file. |
+| MYINFO_SIGNATURE_CERT_PUBLIC_CERT | Absolute path of the MyInfo public certificate in PEM format.  |
 | CLIENT_ID | Unique ID provided upon approval of your application to use MyInfo. For our sample application, it is **STG2-MYINFO-SELF-TEST** |
 | CLIENT_SECRET | Secret key provided upon approval of your application to use MyInfo. For our sample application, it is **44d953c796cccebcec9bdc826852857ab412fbe2** |
 | REDIRECT_URL | The callback URL specified when invoking the authorise call. For our sample application, it is http://localhost:3001/callback |

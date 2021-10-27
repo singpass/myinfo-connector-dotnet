@@ -21,7 +21,7 @@ namespace sg.gov.ndi.MyInfoConnector
         private string keystoreFile;
         private string keystoreFilePassword;
         private string keystoreFilePubKey;
-        private string publicKeystoreFilePassword;
+        //private string publicKeystoreFilePassword;
 
 
         private string publicKey;
@@ -82,26 +82,21 @@ namespace sg.gov.ndi.MyInfoConnector
 
         private void LoadProperties(AppSettingsSection section)
         {
-            if (string.IsNullOrEmpty(section.Settings["KEYSTORE"].Value))
+            if (string.IsNullOrEmpty(section.Settings["CLIENT_SECURE_CERT"].Value))
                 throw new Exception("KeyStore value not found for privatekey or empty in configuration file!");
             else
-                this.keystoreFile = section.Settings["KEYSTORE"].Value;
+                this.keystoreFile = section.Settings["CLIENT_SECURE_CERT"].Value;
 
-            if (string.IsNullOrEmpty(section.Settings["KEYSTORE_PASSPHRASE"].Value))
+            if (string.IsNullOrEmpty(section.Settings["CLIENT_SECURE_CERT_PASSPHRASEE"].Value))
                 throw new Exception("KeyStore pass phrase not found or empty in configuration file!");
             else
-                this.keystoreFilePassword = section.Settings["KEYSTORE_PASSPHRASE"].Value;
+                this.keystoreFilePassword = section.Settings["CLIENT_SECURE_CERT_PASSPHRASEE"].Value;
 
-            if (string.IsNullOrEmpty(section.Settings["KEYSTORE_Public"].Value))
+            if (string.IsNullOrEmpty(section.Settings["MYINFO_SIGNATURE_CERT_PUBLIC_CERT"].Value))
                 throw new Exception("KeyStore value not found for public key or empty in configuration file!");
             else
-                this.keystoreFilePubKey = section.Settings["KEYSTORE_Public"].Value;
-
-            if (string.IsNullOrEmpty(section.Settings["KEYSTORE_PASSPHRASE_PUBLIC"].Value))
-                throw new Exception("KeyStore pass phrase for public key not found for public key or empty in configuration file!");
-            else
-                this.publicKeystoreFilePassword = section.Settings["KEYSTORE_PASSPHRASE_PUBLIC"].Value;
-
+                this.keystoreFilePubKey = section.Settings["MYINFO_SIGNATURE_CERT_PUBLIC_CERT"].Value;
+           
             if (string.IsNullOrEmpty(section.Settings["CLIENT_ID"].Value))
                 throw new Exception("Client id not found or empty in configuration file!");
             else
@@ -156,10 +151,11 @@ namespace sg.gov.ndi.MyInfoConnector
                         this.proxyPersonURL = section.Settings["PROXY_PERSON_URL"].Value;
                 }
             }
-
+                        
             X509Certificate2 certificate = new X509Certificate2(AppDomain.CurrentDomain.BaseDirectory + keystoreFile, keystoreFilePassword, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
             this.privateKey = certificate.PrivateKey.ToXmlString(true);
-            X509Certificate2 certificate1 = new X509Certificate2(AppDomain.CurrentDomain.BaseDirectory + keystoreFilePubKey, keystoreFilePassword, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
+            //X509Certificate2 certificate1 = new X509Certificate2(AppDomain.CurrentDomain.BaseDirectory + keystoreFilePubKey, keystoreFilePassword, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
+            X509Certificate2 certificate1 = new X509Certificate2(AppDomain.CurrentDomain.BaseDirectory + keystoreFilePubKey);
             this.publicKey = certificate1.GetRSAPublicKey().ToXmlString(false);
         }
 
@@ -218,11 +214,12 @@ namespace sg.gov.ndi.MyInfoConnector
 	     * function to retrieve MyInfo Person data.
 	    */
         protected string GetMyInfoPersonData(string authCode, string txnNo, string state, string keyStoreDir,
-            string keyStorePwd, string publicKeystoreDir, string publicKeyPwd)
+            string keyStorePwd, string publicKeystoreDir)
         {
             X509Certificate2 certificate = new X509Certificate2(AppDomain.CurrentDomain.BaseDirectory + keyStoreDir, keyStorePwd, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
             this.privateKey = certificate.PrivateKey.ToXmlString(true);
-            X509Certificate2 certificate1 = new X509Certificate2(AppDomain.CurrentDomain.BaseDirectory + publicKeystoreDir, publicKeyPwd, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
+            //X509Certificate2 certificate1 = new X509Certificate2(AppDomain.CurrentDomain.BaseDirectory + publicKeystoreDir, publicKeyPwd, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
+            X509Certificate2 certificate1 = new X509Certificate2(AppDomain.CurrentDomain.BaseDirectory + publicKeystoreDir);
             this.publicKey = certificate1.GetRSAPublicKey().ToXmlString(false);
 
             return GetMyInfoPersonData(authCode, txnNo, state, this.publicKey, this.privateKey, this.clientAppId,
@@ -238,7 +235,7 @@ namespace sg.gov.ndi.MyInfoConnector
 	    */
         public string GetMyInfoPersonData(string authCode, string txnNo, string state)
         {
-            return GetMyInfoPersonData(authCode, txnNo, state, this.keystoreFile, this.keystoreFilePassword, this.keystoreFilePubKey, this.publicKeystoreFilePassword);
+            return GetMyInfoPersonData(authCode, txnNo, state, this.keystoreFile, this.keystoreFilePassword, this.keystoreFilePubKey);
         }
 
         /*
@@ -249,7 +246,7 @@ namespace sg.gov.ndi.MyInfoConnector
 	    */
         public string GetMyInfoPersonData(string authCode, string state)
         {
-            return GetMyInfoPersonData(authCode, state, this.keystoreFile, this.keystoreFilePassword, this.keystoreFilePubKey, this.publicKeystoreFilePassword);
+            return GetMyInfoPersonData(authCode, state, this.keystoreFile, this.keystoreFilePassword, this.keystoreFilePubKey);
         }
 
         /* 
@@ -258,9 +255,9 @@ namespace sg.gov.ndi.MyInfoConnector
 	     * variable and call the static getMyInfoPersonData function to retrieve
 	     * MyInfo Person data.    
        */
-        protected string GetMyInfoPersonData(string authCode, string state, string keyStoreDir, string keyStorePwd, string publicCert, string publicKeystoreFilePassword)
+        protected string GetMyInfoPersonData(string authCode, string state, string keyStoreDir, string keyStorePwd, string publicCert)
         {
-            return GetMyInfoPersonData(authCode, null, state, keyStoreDir, keyStorePwd, publicCert, publicKeystoreFilePassword);
+            return GetMyInfoPersonData(authCode, null, state, keyStoreDir, keyStorePwd, publicCert);
         }
 
         /*	 
@@ -285,7 +282,7 @@ namespace sg.gov.ndi.MyInfoConnector
                 string userInputURL = useProxy.Equals(ApplicationConstant.YES) ? proxyTokenURL : apiUrl;
 
                 // A) Forming the Signature Base String
-                baseParams = ApplicationConstant.APP_ID + "=" + clientAppId + "&" + ApplicationConstant.CLIENT_ID + "=" + clientAppId + "&" + ApplicationConstant.CLIENT_SECRET + "=" + clientAppPwd + "&" + ApplicationConstant.CODE + "=" + authCode + "&" + ApplicationConstant.GRANT_TYPE + "=" + ApplicationConstant.AUTHORIZATION_CODE + "&" + ApplicationConstant.NONCE + "=" + nonce + "&" + ApplicationConstant.REDIRECT_URI + "=" + redirectUri + "&" + ApplicationConstant.SIGNATURE_METHOD + "=" + ApplicationConstant.RS256 + "&" + ApplicationConstant.TIMESTAMP + "=" + timestamp + "&" + ApplicationConstant.STATE + "=" + state;
+                baseParams = ApplicationConstant.APP_ID + "=" + clientAppId + "&" + ApplicationConstant.CLIENT_ID + "=" + clientAppId + "&" + ApplicationConstant.CLIENT_SECRET + "=" + clientAppPwd + "&" + ApplicationConstant.CODE + "=" + authCode + "&" + ApplicationConstant.GRANT_TYPE + "=" + ApplicationConstant.AUTHORIZATION_CODE + "&" + ApplicationConstant.NONCE + "=" + nonce + "&" + ApplicationConstant.REDIRECT_URI + "=" + redirectUri + "&" + ApplicationConstant.SIGNATURE_METHOD + "=" + ApplicationConstant.RS256 + "&" + ApplicationConstant.STATE + "=" + state + "&" + ApplicationConstant.TIMESTAMP + "=" + timestamp;;
                 string baseString = MyInfoSecurityHelper.GenerateBaseString(ApplicationConstant.POST_METHOD, apiUrl, baseParams);
                 if (!env.Equals(ApplicationConstant.SANDBOX, StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -434,7 +431,7 @@ namespace sg.gov.ndi.MyInfoConnector
         {
             Random random = new Random();
             const string chars = "0123456789";
-            return new string(Enumerable.Repeat(chars, 15)
+            return new string(Enumerable.Repeat(chars, 10)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
