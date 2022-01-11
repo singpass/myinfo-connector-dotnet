@@ -46,28 +46,26 @@ You are required to create a config file with the following key values for this 
 
 ## How to use the connector
 
-### 1. Get a single instance of MyInfoConnector
-
-Get a single instance of MyInfoConnector and load config file:
+### 1. Create an instance of the MyInfoConnector
 
 ```
-MyInfoConnector connector = MyInfoConnector.getInstance("C:\\MyInfoConnectorPROD.config");
+var connector = MyInfoConnector.Create("C:\\MyInfoConnectorPROD.config");
 ```
 
-Once the config file is loaded, you may retrieve the instance again with the below method:
-```
-MyInfoConnector connector = MyInfoConnector.getCurrentInstance();
-```
+### 2. Construct the URL that the user should be redirected to 
+var authoriseUrl = connector.GetAuthoriseUrl();
 
-### 2. Retrieve person's data
+// Receive the callback and get the `authcode`
+
+### 3. Retrieve the persons data
 Retrieve person's data by passing the authorisation code and state from the Authorise API call:
 
 ```
-connector.getMyInfoPersonData(authCode,state);
+connector.GetPersonJson(authCode, state);
 ```
 **txnNo** is an optional parameter that can be passed through the overloaded method, if required.
 ```
-connector.getMyInfoPersonData(authCode,txnNo,state);
+connector.GetPersonJson(authCode, txnNo, state);
 ```
 
 ## Helper methods
