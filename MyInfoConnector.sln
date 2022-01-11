@@ -12,7 +12,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample-configs", "sample-co
 		SampleConfigs\MyInfoConnectorTEST.config = SampleConfigs\MyInfoConnectorTEST.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyInfoConnector.Tests", "MyInfoConnectorTests\MyInfoConnector.Tests.csproj", "{47F67298-75C8-4FCD-9BDA-69CD7BED618A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{987EC677-056A-4505-89FC-80CC51CF2F45}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyInfoConnector.Tests", "tst\MyInfoConnector.Tests\MyInfoConnector.Tests.csproj", "{47F67298-75C8-4FCD-9BDA-69CD7BED618A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

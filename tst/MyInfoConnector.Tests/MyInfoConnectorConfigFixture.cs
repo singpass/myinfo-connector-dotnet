@@ -29,6 +29,10 @@ namespace Ir.Common.UnitTest.Common.MyInfo
             return config;
         }
 
+        /// <summary>
+        /// Test your certificate configuration by setting config to your certificate and pasting in your en encrypted token
+        /// </summary>
+        [Ignore("Integration")]
         [Test]
         public void DecodeTokenToPerson()
         {
@@ -40,23 +44,29 @@ namespace Ir.Common.UnitTest.Common.MyInfo
             Assert.IsNotNull(data);
         }
 
+        /// <summary>
+        /// This is an integration test you can use to test your private key loads
+        /// </summary>
         [Category("Integration")]
         [Test]
         public void LoadPrivateCertificate()
         {
             var config = GetSystemUnderTest();
-            config.PrivateCertificateFilename = @"C:\Downloads\myinfo-dev\dev.website.independentreserve.pfx";
-            config.PrivateCertificatePassword = "ThisIsSecret";
+            config.PrivateCertificateFilename = @"Resources\certs\sandbox-demoapp.pfx";
+            config.PrivateCertificatePassword = "MyInfo2o15";
 
             Assert.DoesNotThrow(() => config.GetPrivateKey());
         }
 
+        /// <summary>
+        /// This is an integration test you can use to test your private key loads
+        /// </summary>
         [Category("Integration")]
         [Test]
         public void LoadPublicCertificate()
         {
             var config = GetSystemUnderTest();
-            config.PublicCertificateFilename = @"C:\Downloads\myinfo-dev\test.der";
+            config.PublicCertificateFilename = @"Resources\certs\sandbox-demoapp.cer";
 
             Assert.DoesNotThrow(() => config.GetPublicKey());
         }
