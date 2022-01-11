@@ -21,13 +21,13 @@ namespace sg.gov.ndi.MyInfoConnector
         /// <remarks>
         /// Should be PFX format
         /// </remarks>
-        public string PrivateCertificateFilename    {get;set;}
+        public string PrivateCertificateFilename { get; set; }
 
 
         /// <summary>
         /// Password to private certificate
         /// </summary>
-        public string PrivateCertificatePassword    {get;set;}
+        public string PrivateCertificatePassword { get; set; }
 
         /// <summary>
         /// Path to Public certificate of consent.myinfo.gov.sg
@@ -35,23 +35,23 @@ namespace sg.gov.ndi.MyInfoConnector
         /// <remarks>
         /// Should be binary (DER) or Base64 encoded
         /// </remarks>
-        public string PublicCertificateFilename     {get;set;}
+        public string PublicCertificateFilename { get; set; }
 
-        public string ClientAppId                   {get;set;}
+        public string ClientAppId { get; set; }
 
-        public string ClientAppPassword             {get;set;}
+        public string ClientAppPassword { get; set; }
 
-        public string AttributeCsv                  {get;set;}
+        public string AttributeCsv { get; set; }
 
-        public string Environment                   {get;set;}
+        public string Environment { get; set; }
 
-        public string AuthoriseUrl                  {get;set;}
+        public string AuthoriseUrl { get; set; }
 
-        public string TokenUrl                      {get;set;}
+        public string TokenUrl { get; set; }
 
-        public string PersonUrl                     {get;set;}
+        public string PersonUrl { get; set; }
 
-        public string Purpose                       {get;set;}
+        public string Purpose { get; set; }
 
         public bool IsSandbox => Environment == ApplicationConstant.SANDBOX;
 
@@ -121,15 +121,15 @@ namespace sg.gov.ndi.MyInfoConnector
         {
             var messages = new List<string>();
 
-            if (string.IsNullOrEmpty(PrivateCertificateFilename))   messages.Add($"PrivateCertificateFilename missing or empty");
-            if (string.IsNullOrEmpty(PrivateCertificatePassword))   messages.Add($"PrivateCertificatePassword missing or empty");
-            if (string.IsNullOrEmpty(PublicCertificateFilename))    messages.Add($"PublicCertificateFilename missing or empty");
-            if (string.IsNullOrEmpty(ClientAppId))                  messages.Add($"ClientAppId missing or empty");
-            if (string.IsNullOrEmpty(ClientAppPassword))            messages.Add($"ClientAppPassword missing or empty");      
-            if (string.IsNullOrEmpty(AttributeCsv))                 messages.Add($"AttributeCsv missing or empty");
-            if (string.IsNullOrEmpty(Environment))                  messages.Add($"Environment missing or empty");
-            if (string.IsNullOrEmpty(TokenUrl))                     messages.Add($"TokenUrl missing or empty");
-            if (string.IsNullOrEmpty(PersonUrl))                    messages.Add($"PersonUrl missing or empty");
+            if (string.IsNullOrEmpty(PrivateCertificateFilename)) messages.Add($"PrivateCertificateFilename missing or empty");
+            if (string.IsNullOrEmpty(PrivateCertificatePassword)) messages.Add($"PrivateCertificatePassword missing or empty");
+            if (string.IsNullOrEmpty(PublicCertificateFilename)) messages.Add($"PublicCertificateFilename missing or empty");
+            if (string.IsNullOrEmpty(ClientAppId)) messages.Add($"ClientAppId missing or empty");
+            if (string.IsNullOrEmpty(ClientAppPassword)) messages.Add($"ClientAppPassword missing or empty");
+            if (string.IsNullOrEmpty(AttributeCsv)) messages.Add($"AttributeCsv missing or empty");
+            if (string.IsNullOrEmpty(Environment)) messages.Add($"Environment missing or empty");
+            if (string.IsNullOrEmpty(TokenUrl)) messages.Add($"TokenUrl missing or empty");
+            if (string.IsNullOrEmpty(PersonUrl)) messages.Add($"PersonUrl missing or empty");
 
 
             if (!string.IsNullOrEmpty(PrivateCertificateFilename))
@@ -159,6 +159,9 @@ namespace sg.gov.ndi.MyInfoConnector
             return (messages.Count == 0, messages.ToArray());
         }
 
+        /// <summary>
+        /// Use the output of this method when submitting support tickets
+        /// </summary>
         public string[] GetDiagnosticInfo()
         {
             GetPrivateKey();
@@ -176,6 +179,9 @@ namespace sg.gov.ndi.MyInfoConnector
             return messages.ToArray();
         }
 
+        /// <summary>
+        /// Load from appsettings
+        /// </summary>
         public static MyInfoConnectorConfig Load(AppSettingsSection section, string keyPrefix = null)
         {
             Func<string, string> getSetting = (string keySuffix) =>
@@ -186,6 +192,9 @@ namespace sg.gov.ndi.MyInfoConnector
             return Load(getSetting);
         }
 
+        /// <summary>
+        /// Load from a name value collection
+        /// </summary>
         public static MyInfoConnectorConfig Load(NameValueCollection appSettings, string keyPrefix = null)
         {
             Func<string, string> getSetting = (string keySuffix) =>
@@ -196,6 +205,10 @@ namespace sg.gov.ndi.MyInfoConnector
             return Load(getSetting);
         }
 
+        /// <summary>
+        /// Load from callbacks which allows the consuming code to dynamically change response depending on environment
+        /// for example - decrypt production password
+        /// </summary>
         public static MyInfoConnectorConfig Load(Func<string, string> getSetting)
         {
             var output = new MyInfoConnectorConfig();

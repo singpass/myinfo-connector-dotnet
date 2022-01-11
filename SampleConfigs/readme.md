@@ -1,0 +1,1 @@
+These config files are slightly out of date with naming, but give the general idea

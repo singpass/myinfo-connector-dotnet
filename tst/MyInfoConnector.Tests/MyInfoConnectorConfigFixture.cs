@@ -47,7 +47,7 @@ namespace Ir.Common.UnitTest.Common.MyInfo
         /// <summary>
         /// This is an integration test you can use to test your private key loads
         /// </summary>
-        [Category("Integration")]
+        [Ignore("Integration")]
         [Test]
         public void LoadPrivateCertificate()
         {
