@@ -1,0 +1,365 @@
+{
+    "uinfin": {
+        "lastupdated": "2021-10-29",
+        "source": "1",
+        "classification": "C",
+        "value": "S3100052A"
+    },
+    "name": {
+        "lastupdated": "2021-10-29",
+        "source": "1",
+        "classification": "C",
+        "value": "HU DAT FUK"
+    },
+    "sex": {
+        "lastupdated": "2021-10-29",
+        "code": "F",
+        "source": "1",
+        "classification": "C",
+        "desc": "FEMALE"
+    },
+    "race": {
+        "lastupdated": "2021-10-29",
+        "code": "CN",
+        "source": "1",
+        "classification": "C",
+        "desc": "CHINESE"
+    },
+    "nationality": {
+        "lastupdated": "2021-10-29",
+        "code": "SG",
+        "source": "1",
+        "classification": "C",
+        "desc": "SINGAPORE CITIZEN"
+    },
+    "dob": {
+        "lastupdated": "2021-10-29",
+        "source": "1",
+        "classification": "C",
+        "value": "1998-06-06"
+    },
+    "email": {
+        "lastupdated": "2021-10-29",
+        "source": "4",
+        "classification": "C",
+        "value": "myinfotesting@gmail.com"
+    },
+    "mobileno": {
+        "lastupdated": "2021-10-29",
+        "source": "4",
+        "classification": "C",
+        "areacode": {
+            "value": "65"
+        },
+        "prefix": {
+            "value": " + "
+        },
+        "nbr": {
+            "value": "97399245"
+        }
+    },
+    "regadd": {
+        "country": {
+            "code": "SG",
+            "desc": "SINGAPORE"
+        },
+        "unit": {
+            "value": "128"
+        },
+        "street": {
+            "value": "BEDOK NORTH AVENUE 4"
+        },
+        "lastupdated": "2021-10-29",
+        "block": {
+            "value": "102"
+        },
+        "source": "1",
+        "postal": {
+            "value": "460102"
+        },
+        "classification": "C",
+        "floor": {
+            "value": "09"
+        },
+        "type": "SG",
+        "building": {
+            "value": "PEARL GARDEN"
+        }
+    },
+    "housingtype": {
+        "lastupdated": "2021-10-29",
+        "code": "",
+        "source": "1",
+        "classification": "C",
+        "desc": ""
+    },
+    "hdbtype": {
+        "lastupdated": "2021-10-29",
+        "code": "113",
+        "source": "1",
+        "classification": "C",
+        "desc": "3-ROOM FLAT (HDB)"
+    },
+    "marital": {
+        "lastupdated": "2021-10-29",
+        "code": "",
+        "source": "1",
+        "classification": "C",
+        "desc": ""
+    },
+    "edulevel": {
+        "lastupdated": "2021-10-29",
+        "code": "",
+        "source": "2",
+        "classification": "C",
+        "desc": ""
+    },
+    "noa-basic": {
+        "yearofassessment": {
+            "value": "2020"
+        },
+        "lastupdated": "2021-10-29",
+        "amount": {
+            "value": 64400
+        },
+        "source": "1",
+        "classification": "C"
+    },
+    "ownerprivate": {
+        "lastupdated": "2021-10-29",
+        "source": "1",
+        "classification": "C",
+        "value": "false"
+    },
+    "cpfcontributions": {
+        "lastupdated": "2021-10-29",
+        "source": "1",
+        "history": [
+            {
+                "date": {
+                    "value": "2020-08-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 1425
+                },
+                "month": {
+                    "value": "2020-08"
+                }
+            },
+            {
+                "date": {
+                    "value": "2020-09-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 1425
+                },
+                "month": {
+                    "value": "2020-09"
+                }
+            },
+            {
+                "date": {
+                    "value": "2020-10-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 2850
+                },
+                "month": {
+                    "value": "2020-10"
+                }
+            },
+            {
+                "date": {
+                    "value": "2020-11-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 1425
+                },
+                "month": {
+                    "value": "2020-11"
+                }
+            },
+            {
+                "date": {
+                    "value": "2020-12-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 1425
+                },
+                "month": {
+                    "value": "2020-12"
+                }
+            },
+            {
+                "date": {
+                    "value": "2021-01-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 1425
+                },
+                "month": {
+                    "value": "2021-01"
+                }
+            },
+            {
+                "date": {
+                    "value": "2021-02-28"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 5700
+                },
+                "month": {
+                    "value": "2021-02"
+                }
+            },
+            {
+                "date": {
+                    "value": "2021-03-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 1575
+                },
+                "month": {
+                    "value": "2021-03"
+                }
+            },
+            {
+                "date": {
+                    "value": "2021-04-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 1575
+                },
+                "month": {
+                    "value": "2021-04"
+                }
+            },
+            {
+                "date": {
+                    "value": "2021-05-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 1575
+                },
+                "month": {
+                    "value": "2021-05"
+                }
+            },
+            {
+                "date": {
+                    "value": "2021-06-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 1575
+                },
+                "month": {
+                    "value": "2021-06"
+                }
+            },
+            {
+                "date": {
+                    "value": "2021-07-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 1575
+                },
+                "month": {
+                    "value": "2021-07"
+                }
+            },
+            {
+                "date": {
+                    "value": "2021-08-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 1575
+                },
+                "month": {
+                    "value": "2021-08"
+                }
+            },
+            {
+                "date": {
+                    "value": "2021-09-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 1575
+                },
+                "month": {
+                    "value": "2021-09"
+                }
+            },
+            {
+                "date": {
+                    "value": "2021-10-29"
+                },
+                "employer": {
+                    "value": "CRYSTAL HORSE INVEST PTE LTD"
+                },
+                "amount": {
+                    "value": 3150
+                },
+                "month": {
+                    "value": "2021-10"
+                }
+            }
+        ],
+        "classification": "C"
+    },
+    "cpfbalances": {
+        "lastupdated": "2021-10-29",
+        "oa": {
+            "value": 58839.75
+        },
+        "source": "1",
+        "classification": "C",
+        "ma": {
+            "value": 20466
+        },
+        "sa": {
+            "value": 15349.5
+        }
+    }
+}

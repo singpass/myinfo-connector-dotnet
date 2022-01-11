@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample-configs", "sample-co
 		SampleConfigs\MyInfoConnectorTEST.config = SampleConfigs\MyInfoConnectorTEST.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyInfoConnector.Tests", "MyInfoConnectorTests\MyInfoConnector.Tests.csproj", "{47F67298-75C8-4FCD-9BDA-69CD7BED618A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,14 @@ Global
 		{4D5B2F04-5186-4C40-838D-8B2752B09A5D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D5B2F04-5186-4C40-838D-8B2752B09A5D}.Release|x86.ActiveCfg = Release|x86
 		{4D5B2F04-5186-4C40-838D-8B2752B09A5D}.Release|x86.Build.0 = Release|x86
+		{47F67298-75C8-4FCD-9BDA-69CD7BED618A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47F67298-75C8-4FCD-9BDA-69CD7BED618A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47F67298-75C8-4FCD-9BDA-69CD7BED618A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{47F67298-75C8-4FCD-9BDA-69CD7BED618A}.Debug|x86.Build.0 = Debug|Any CPU
+		{47F67298-75C8-4FCD-9BDA-69CD7BED618A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47F67298-75C8-4FCD-9BDA-69CD7BED618A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47F67298-75C8-4FCD-9BDA-69CD7BED618A}.Release|x86.ActiveCfg = Release|Any CPU
+		{47F67298-75C8-4FCD-9BDA-69CD7BED618A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

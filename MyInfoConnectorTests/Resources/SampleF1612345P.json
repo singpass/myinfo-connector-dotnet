@@ -1,0 +1,58 @@
+{
+  "uinfin": {
+    "lastupdated": "2021-11-09",
+    "source": "1",
+    "classification": "C",
+    "value": "F1612345P"
+  },
+  "name": {
+    "lastupdated": "2021-11-09",
+    "source": "1",
+    "classification": "C",
+    "value": "PARTIAL INFO USER ONE"
+  },
+  "dob": {
+    "lastupdated": "2021-11-09",
+    "source": "1",
+    "classification": "C",
+    "value": "1990-03-03"
+  },
+  "nationality": {
+    "lastupdated": "2021-11-09",
+    "code": "MY",
+    "source": "1",
+    "classification": "C",
+    "desc": "MALAYSIAN"
+  },
+  "passtype": {
+    "lastupdated": "2021-11-09",
+    "code": "DP",
+    "source": "1",
+    "classification": "C",
+    "desc": "Dependent Pass"
+  },
+  "passstatus": {
+    "lastupdated": "2021-11-09",
+    "source": "1",
+    "classification": "C",
+    "value": "Live"
+  },
+  "passexpirydate": {
+    "lastupdated": "2021-11-09",
+    "source": "1",
+    "classification": "C",
+    "value": "2035-12-31"
+  },
+  "regadd": {
+    "lastupdated": "2021-11-09",
+    "source": "3",
+    "classification": "C",
+    "type": "Unformatted",
+    "line2": {
+      "value": ""
+    },
+    "line1": {
+      "value": "No. 1 Xiu Shui Bei Jie, Jian Guo Men Wai"
+    }
+  }
+}
