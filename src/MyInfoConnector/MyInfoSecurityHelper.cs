@@ -4,64 +4,60 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace sg.gov.ndi.MyInfoConnector
 {
     public class MyInfoSecurityHelper
-    {        
-	    //Generate Authorization Header Method	    
-        public static string GenerateAuthorizationHeader(string defaultHeader, string bearer)
+    {
+        static RandomGenerator _randomGenerator = new RandomGenerator();
+
+        /// <summary>
+        /// Used for nonce. Cryptographically random
+        /// </summary>
+        public static int GetRandomInteger()
         {
-            string authHeader = string.Empty;
-            try
-            {
-                if (bearer != null)
-                    authHeader = ApplicationConstant.PKI_SIGN + " " + defaultHeader + "," + bearer;
-                else
-                    authHeader = ApplicationConstant.PKI_SIGN + " " + defaultHeader;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            return authHeader;
-        }
-        
-	    //Generate Base String Method	    
-        public static string GenerateBaseString(string method, string url, string baseParams)
-        {
-            string basestring = string.Empty;
-            basestring = method.ToUpper() + "&" + url + "&" + baseParams;
-            return basestring;
-        }
-        
-	    //Generate Signature Method	     
-        public static string GenerateSignature(string basestring, string privateKey)
-        {
-            string signature = null;
-            try
-            {
-                if (!string.IsNullOrEmpty(privateKey))
-                {
-                    RSACryptoServiceProvider RSA = new RSACryptoServiceProvider();
-                    RSA.FromXmlString(privateKey);
-                    RSAPKCS1SignatureFormatter RSAFormatter = new RSAPKCS1SignatureFormatter(RSA);
-                    RSAFormatter.SetHashAlgorithm("SHA256");
-                    SHA256Managed SHhash = new SHA256Managed();
-                    byte[] SignedHashValue = RSAFormatter.CreateSignature(SHhash.ComputeHash(Encoding.UTF8.GetBytes(basestring)));
-                    signature = System.Convert.ToBase64String(SignedHashValue);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            return signature;
+            var randomValue = _randomGenerator.Next(0, int.MaxValue);
+            return randomValue;
         }
 
-        //Decode Token Method
+        public static string GenerateAuthorizationHeader(string defaultHeader, string bearer)
+        {
+            string authHeader;
+
+            if (bearer != null)
+            {
+                authHeader = ApplicationConstant.PKI_SIGN + " " + defaultHeader + "," + bearer;
+            }
+            else
+            {
+                authHeader = ApplicationConstant.PKI_SIGN + " " + defaultHeader;
+            }
+
+            return authHeader;
+        }
+
+        public static string GenerateBaseString(string method, string url, string baseParams)
+        {
+            string basestring = method.ToUpper() + "&" + url + "&" + baseParams;
+            return basestring;
+        }
+
+        public static string GenerateSignature(string input, string privateKeyXml)
+        {
+            string hashSignatureBase64;
+
+            var rsaProvider = new RSACryptoServiceProvider();
+            rsaProvider.FromXmlString(privateKeyXml);
+            var rsaFormatter = new RSAPKCS1SignatureFormatter(rsaProvider);
+            rsaFormatter.SetHashAlgorithm("SHA256");
+            var sha256 = new SHA256Managed();
+            var hashSignatureBytes = rsaFormatter.CreateSignature(sha256.ComputeHash(Encoding.UTF8.GetBytes(input)));
+            hashSignatureBase64 = Convert.ToBase64String(hashSignatureBytes);
+
+            return hashSignatureBase64;
+        }
+
         public static object DecodeToken(string token)
         {
             string encodedPayload = token.Split('.')[1];
@@ -69,27 +65,25 @@ namespace sg.gov.ndi.MyInfoConnector
             object jsonObject = JsonConvert.DeserializeObject(decodedPayload);
             return jsonObject;
         }
-                	 
-	    // Verify Token Method	     
-        public static bool VerifyToken(string token, string publicKey)
+
+
+        public static bool VerifyToken(string token, AsymmetricAlgorithm rsaService)
         {
             bool signVerified = false;
             string[] tokenParts = token.TrimStart('"').TrimEnd('"').Split('.');
-            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
-            rsa.ImportParameters(
-              new RSAParameters()
-              {
-                  Modulus = FromBase64Url(XElement.Parse(publicKey).Element("Modulus").Value),
-                  Exponent = FromBase64Url(XElement.Parse(publicKey).Element("Exponent").Value)
-              });
 
-            SHA256 sha256 = SHA256.Create();
+            var sha256 = SHA256.Create();
             byte[] hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(tokenParts[0] + '.' + tokenParts[1]));
 
-            RSAPKCS1SignatureDeformatter rsaDeformatter = new RSAPKCS1SignatureDeformatter(rsa);
+            var rsaDeformatter = new RSAPKCS1SignatureDeformatter(rsaService);
             rsaDeformatter.SetHashAlgorithm("SHA256");
-            if (rsaDeformatter.VerifySignature(hash, FromBase64Url(tokenParts[2])))
+            var signature = FromBase64Url(tokenParts[2]);
+
+            if (rsaDeformatter.VerifySignature(hash, signature))
+            {
                 signVerified = true;
+            }
+
             return signVerified;
         }
 

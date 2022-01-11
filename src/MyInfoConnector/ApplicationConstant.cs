@@ -38,7 +38,5 @@ namespace sg.gov.ndi.MyInfoConnector
         public static readonly string SIGNATURE = "signature";
         public static readonly string PKI_SIGN = "PKI_SIGN";
         public static readonly string BEARER = "Bearer";
-        public static readonly string YES = "Y";
-        public static readonly string NO = "N";        
     }
 }

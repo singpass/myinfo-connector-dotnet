@@ -5,6 +5,13 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyInfoConnector", "src\MyInfoConnector\MyInfoConnector.csproj", "{4D5B2F04-5186-4C40-838D-8B2752B09A5D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample-configs", "sample-configs", "{FF9175E9-4878-49FB-84B4-B7DA1B71BE78}"
+	ProjectSection(SolutionItems) = preProject
+		SampleConfigs\MyInfoConnectorPROD.config = SampleConfigs\MyInfoConnectorPROD.config
+		SampleConfigs\MyInfoConnectorSANDBOX.config = SampleConfigs\MyInfoConnectorSANDBOX.config
+		SampleConfigs\MyInfoConnectorTEST.config = SampleConfigs\MyInfoConnectorTEST.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
