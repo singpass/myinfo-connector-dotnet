@@ -49,13 +49,19 @@ You are required to create a config file with the following key values for this 
 ### 1. Create an instance of the MyInfoConnector
 
 ```
-var connector = MyInfoConnector.Create("C:\\MyInfoConnectorPROD.config");
+Func<string, string> getConfig = key => 
+{ 
+	// given a key, return the value. This pattern allows external methods of encryption/decryption of secrets
+};
+var connector = MyInfoConnector.Create(getConfig);
 ```
 
 ### 2. Construct the URL that the user should be redirected to 
-var authoriseUrl = connector.GetAuthoriseUrl();
 
+```
+var authoriseUrl = connector.GetAuthoriseUrl();
 // Receive the callback and get the `authcode`
+```
 
 ### 3. Retrieve the persons data
 Retrieve person's data by passing the authorisation code and state from the Authorise API call:
