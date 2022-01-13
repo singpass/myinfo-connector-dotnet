@@ -59,8 +59,8 @@ var connector = MyInfoConnector.Create(getConfig);
 The authorise URL includes the redirect URL so that the service can redirect the user to it after granting consent.
 
 ```
-var authoriseUrl = connector.GetAuthoriseUrl();
-// Receive the callback and get the `authcode`
+var authoriseUrl = connector.GetAuthoriseUrl(redirectUrl);
+// Invoke the authorise endpoint with authoriseUrl. Receive the callback and get the `authcode`
 ```
 
 ### 3. Retrieve the persons data
