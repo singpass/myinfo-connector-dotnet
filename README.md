@@ -41,7 +41,7 @@ You are required to create a config file with the following key values for this 
 | AuthoriseUrl | Specify the AUTHORISE API URL for MyInfo. The API is available in three environments:<br> SANDBOX: **https://sandbox.api.myinfo.gov.sg/com/v3/authorise**<br> TEST: **https://test.api.myinfo.gov.sg/com/v3/authorise**<br> PROD:  **https://api.myinfo.gov.sg/com/v3/authorise** |
 | TokenUrl | Specify the TOKEN API URL for MyInfo. The API is available in three environments:<br> SANDBOX: **https://sandbox.api.myinfo.gov.sg/com/v3/token**<br> TEST: **https://test.api.myinfo.gov.sg/com/v3/token**<br> PROD:  **https://api.myinfo.gov.sg/com/v3/token** |
 | PersonUrl | Specify the PERSON API URL for MyInfo. The API is available in three environments:<br> SANDBOX: **https://sandbox.api.myinfo.gov.sg/com/v3/person**<br> TEST: **https://test.api.myinfo.gov.sg/com/v3/person**<br> PROD:  **https://api.myinfo.gov.sg/com/v3/person** |
-| Purpose | The text passed to the OAuth to inform the user what 
+| Purpose | The text passed to the OAuth service to inform the user about the purpose to get his/her data. This will be shown to the user when requesting for his/her consent.
 
 ## How to use the connector
 
