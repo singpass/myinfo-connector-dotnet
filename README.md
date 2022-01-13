@@ -63,7 +63,7 @@ var authoriseUrl = connector.GetAuthoriseUrl(redirectUrl);
 // Invoke the authorise endpoint with authoriseUrl. Receive the callback and get the `authcode`
 ```
 
-### 3. Retrieve the persons data
+### 3. Retrieve the person's data
 Retrieve person's data by passing the authorisation code and state from the Authorise API call:
 
 ```
