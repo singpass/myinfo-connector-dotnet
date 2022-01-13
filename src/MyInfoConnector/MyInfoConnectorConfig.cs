@@ -124,8 +124,8 @@ namespace sg.gov.ndi.MyInfoConnector
             if (string.IsNullOrEmpty(PrivateKeyFilename)) messages.Add("PrivateKeyFilename missing or empty");
             if (string.IsNullOrEmpty(PrivateKeyPassword)) messages.Add("PrivateKeyPassword missing or empty");
             if (string.IsNullOrEmpty(PublicCertificateFilename)) messages.Add("PublicCertificateFilename missing or empty");
-            if (string.IsNullOrEmpty(ClientId)) messages.Add("ClientAppId missing or empty");
-            if (string.IsNullOrEmpty(ClientSecret)) messages.Add("ClientAppPassword missing or empty");
+            if (string.IsNullOrEmpty(ClientId)) messages.Add("ClientId missing or empty");
+            if (string.IsNullOrEmpty(ClientSecret)) messages.Add("ClientSecret missing or empty");
             if (string.IsNullOrEmpty(AttributeCsv)) messages.Add("AttributeCsv missing or empty");
             if (string.IsNullOrEmpty(Environment)) messages.Add("Environment missing or empty");
             if (string.IsNullOrEmpty(TokenUrl)) messages.Add("TokenUrl missing or empty");
@@ -140,7 +140,7 @@ namespace sg.gov.ndi.MyInfoConnector
                 }
                 catch (Exception e)
                 {
-                    messages.Add("PrivateKeyFilename failed to load - " + e.Message);
+                    messages.Add($"PrivateKeyFilename failed to load - {e.Message}");
                 }
             }
 
@@ -152,7 +152,7 @@ namespace sg.gov.ndi.MyInfoConnector
                 }
                 catch (Exception e)
                 {
-                    messages.Add("PublicCertificateFilename failed to load - " + e.Message);
+                    messages.Add($"PublicCertificateFilename failed to load - {e.Message}");
                 }
             }
 
@@ -217,8 +217,8 @@ namespace sg.gov.ndi.MyInfoConnector
             output.PrivateKeyPassword = getSetting("PrivateKeyPassword");
             output.PublicCertificateFilename = getSetting("PublicCertificateFilename");
 
-            output.ClientId = getSetting("ClientAppId");
-            output.ClientSecret = getSetting("ClientAppPassword");
+            output.ClientId = getSetting("ClientId");
+            output.ClientSecret = getSetting("ClientSecret");
             output.AttributeCsv = getSetting("AttributeCsv");
             output.Environment = getSetting("Environment");
             output.TokenUrl = getSetting("TokenUrl");
