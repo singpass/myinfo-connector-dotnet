@@ -55,7 +55,8 @@ Func<string, string> getConfig = key =>
 var connector = MyInfoConnector.Create(getConfig);
 ```
 
-### 2. Construct the URL that the user should be redirected to 
+### 2. Construct the authorise URL 
+The authorise URL includes the redirect URL so that the service can redirect the user to it after granting consent.
 
 ```
 var authoriseUrl = connector.GetAuthoriseUrl();
