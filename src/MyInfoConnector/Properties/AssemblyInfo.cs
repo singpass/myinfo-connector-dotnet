@@ -3,8 +3,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Singapore Gov MyInfoConnector")]
-[assembly: AssemblyDescription("SingPass integration library")]
+[assembly: AssemblyTitle("MyInfoConnector")]
+[assembly: AssemblyDescription(".Net Connector for MyInfo")]
 [assembly: InternalsVisibleTo("MyInfoConnector.Tests")]
 
 
