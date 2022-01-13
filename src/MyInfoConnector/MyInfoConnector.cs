@@ -24,10 +24,7 @@ namespace sg.gov.ndi.MyInfoConnector
             var authApiUrl = _config.AuthoriseUrl;
             var purpose = _config.Purpose;
 
-            var args = "?client_id=" + _config.ClientAppId +
-                     "&attributes=" + _config.AttributeCsv +
-                     "&purpose=" + Uri.EscapeDataString(purpose) +
-                     "&redirect_uri=" + Uri.EscapeDataString(redirectUri);
+            var args = $"?client_id={_config.ClientId}&attributes={_config.AttributeCsv}&purpose={Uri.EscapeDataString(purpose)}&redirect_uri={Uri.EscapeDataString(redirectUri)}";
 
             args += "&state=" + (string.IsNullOrEmpty(state) ? "no-state" : Uri.EscapeDataString(state));
 
@@ -131,7 +128,7 @@ namespace sg.gov.ndi.MyInfoConnector
                 string signature = null;
 
                 // A) Forming the Signature Base String
-                baseParams = $"{ApplicationConstant.APP_ID}={_config.ClientAppId}&{ApplicationConstant.CLIENT_ID}={_config.ClientAppId}&{ApplicationConstant.CLIENT_SECRET}={_config.ClientAppPassword}&{ApplicationConstant.CODE}={authCode}&{ApplicationConstant.GRANT_TYPE}={ApplicationConstant.AUTHORIZATION_CODE}&{ApplicationConstant.NONCE}={nonce}&{ApplicationConstant.REDIRECT_URI}={redirectUri}&{ApplicationConstant.SIGNATURE_METHOD}={ApplicationConstant.RS256}&{ApplicationConstant.STATE}={state}&{ApplicationConstant.TIMESTAMP}={timestamp}"; ;
+                baseParams = $"{ApplicationConstant.APP_ID}={_config.ClientId}&{ApplicationConstant.CLIENT_ID}={_config.ClientId}&{ApplicationConstant.CLIENT_SECRET}={_config.ClientSecret}&{ApplicationConstant.CODE}={authCode}&{ApplicationConstant.GRANT_TYPE}={ApplicationConstant.AUTHORIZATION_CODE}&{ApplicationConstant.NONCE}={nonce}&{ApplicationConstant.REDIRECT_URI}={redirectUri}&{ApplicationConstant.SIGNATURE_METHOD}={ApplicationConstant.RS256}&{ApplicationConstant.STATE}={state}&{ApplicationConstant.TIMESTAMP}={timestamp}";
                 baseString = MyInfoSecurityHelper.GenerateBaseString(ApplicationConstant.POST_METHOD, _config.TokenUrl, baseParams);
 
                 if (!_config.IsSandbox)
@@ -145,13 +142,13 @@ namespace sg.gov.ndi.MyInfoConnector
                     // C) Assembling the Header
                     if (signature != null)
                     {
-                        string headers = ApplicationConstant.APP_ID + "=\"" + _config.ClientAppId + "\"," + ApplicationConstant.NONCE + "=\"" + nonce + "\"," + ApplicationConstant.SIGNATURE_METHOD + "=\"" + ApplicationConstant.RS256 + "\"" + "," + ApplicationConstant.SIGNATURE + "=\"" + signature + "\"," + ApplicationConstant.TIMESTAMP + "=\"" + timestamp + "\"";
+                        string headers = $"{ApplicationConstant.APP_ID}=\"{_config.ClientId}\",{ApplicationConstant.NONCE}=\"{nonce}\",{ApplicationConstant.SIGNATURE_METHOD}=\"{ApplicationConstant.RS256}\",{ApplicationConstant.SIGNATURE}=\"{signature}\",{ApplicationConstant.TIMESTAMP}=\"{timestamp}\"";
                         authHeader = MyInfoSecurityHelper.GenerateAuthorizationHeader(headers, null);
                     }
                 }
 
                 // D) Assembling the params
-                string parameters = $"{ApplicationConstant.GRANT_TYPE}={ApplicationConstant.AUTHORIZATION_CODE}&{ApplicationConstant.CODE}={authCode}&{ApplicationConstant.REDIRECT_URI}={redirectUri}&{ApplicationConstant.CLIENT_ID}={_config.ClientAppId}&{ApplicationConstant.CLIENT_SECRET}={_config.ClientAppPassword}&{ApplicationConstant.STATE}={state}";
+                string parameters = $"{ApplicationConstant.GRANT_TYPE}={ApplicationConstant.AUTHORIZATION_CODE}&{ApplicationConstant.CODE}={authCode}&{ApplicationConstant.REDIRECT_URI}={redirectUri}&{ApplicationConstant.CLIENT_ID}={_config.ClientId}&{ApplicationConstant.CLIENT_SECRET}={_config.ClientSecret}&{ApplicationConstant.STATE}={state}";
 
                 // E) Prepare request for TOKEN API
                 var request = (HttpWebRequest)WebRequest.Create(_config.TokenUrl);
@@ -204,7 +201,7 @@ State='{state}'"
 
             try
             {
-                var specificPersonUrl = _config.PersonUrl + "/" + uinFin + "/";
+                var specificPersonUrl = $"{_config.PersonUrl}/{uinFin}/";
 
                 var nonce = MyInfoSecurityHelper.GetRandomInteger();
                 long timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
@@ -213,7 +210,7 @@ State='{state}'"
                 string authHeader = null;
 
                 // A) Forming the Signature Base String
-                baseParams = $"{ApplicationConstant.APP_ID}={_config.ClientAppId}&{ApplicationConstant.ATTRIBUTE}={_config.AttributeCsv}&{ApplicationConstant.CLIENT_ID}={_config.ClientAppId}&{ApplicationConstant.NONCE}={nonce}&{ApplicationConstant.SIGNATURE_METHOD}={ApplicationConstant.RS256}&{ApplicationConstant.TIMESTAMP}={timestamp}";
+                baseParams = $"{ApplicationConstant.APP_ID}={_config.ClientId}&{ApplicationConstant.ATTRIBUTE}={_config.AttributeCsv}&{ApplicationConstant.CLIENT_ID}={_config.ClientId}&{ApplicationConstant.NONCE}={nonce}&{ApplicationConstant.SIGNATURE_METHOD}={ApplicationConstant.RS256}&{ApplicationConstant.TIMESTAMP}={timestamp}";
 
                 if (txnNo != null)
                 {
@@ -231,12 +228,12 @@ State='{state}'"
                 // C) Assembling the Header
                 if (signature != null)
                 {
-                    string header = $"{ApplicationConstant.APP_ID}=\"{_config.ClientAppId}\",{ApplicationConstant.NONCE}=\"{nonce}\",{ApplicationConstant.SIGNATURE_METHOD}=\"{ApplicationConstant.RS256}\",{ApplicationConstant.SIGNATURE}=\"{signature}\",{ApplicationConstant.TIMESTAMP}=\"{timestamp}\"";
+                    string header = $"{ApplicationConstant.APP_ID}=\"{_config.ClientId}\",{ApplicationConstant.NONCE}=\"{nonce}\",{ApplicationConstant.SIGNATURE_METHOD}=\"{ApplicationConstant.RS256}\",{ApplicationConstant.SIGNATURE}=\"{signature}\",{ApplicationConstant.TIMESTAMP}=\"{timestamp}\"";
                     authHeader = MyInfoSecurityHelper.GenerateAuthorizationHeader(header, bearer);
                 }
 
                 // D) Assembling the params
-                specificPersonUrl = specificPersonUrl + "?" + ApplicationConstant.CLIENT_ID + "=" + _config.ClientAppId + "&" + ApplicationConstant.ATTRIBUTE + "=" + _config.AttributeCsv;
+                specificPersonUrl = $"{specificPersonUrl}?{ApplicationConstant.CLIENT_ID}={_config.ClientId}&{ApplicationConstant.ATTRIBUTE}={_config.AttributeCsv}";
 
                 if (txnNo != null)
                 {

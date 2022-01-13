@@ -31,8 +31,8 @@ You are required to create a config file with the following key values for this 
 
 | Required config values | Description |
 | -------- | ----------- |
-| PrivateCertificateFilename | Path of the .p12 file that holds the private key. Absolute or relative path to assembly |
-| PrivateCertificatePassword | Password of your private key p12 file. |
+| PrivateKeyFilename | Path of the .p12 file that holds the private key. Absolute or relative path to assembly |
+| PrivateKeyPassword | Password of your private key p12 file. |
 | PublicCertificateFilename | Path to the MyInfo public certificate. Absolute or relative path to assembly  |
 | ClientAppId | Unique ID provided upon approval of your application to use MyInfo. For our sample application, it is **STG2-MYINFO-SELF-TEST** |
 | ClientAppPassword | Secret key provided upon approval of your application to use MyInfo. For our sample application, it is **44d953c796cccebcec9bdc826852857ab412fbe2** |

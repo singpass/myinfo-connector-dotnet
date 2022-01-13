@@ -21,13 +21,13 @@ namespace sg.gov.ndi.MyInfoConnector
         /// <remarks>
         /// Should be PFX format
         /// </remarks>
-        public string PrivateCertificateFilename { get; set; }
+        public string PrivateKeyFilename { get; set; }
 
 
         /// <summary>
         /// Password to private certificate
         /// </summary>
-        public string PrivateCertificatePassword { get; set; }
+        public string PrivateKeyPassword { get; set; }
 
         /// <summary>
         /// Path to Public certificate of consent.myinfo.gov.sg
@@ -37,9 +37,9 @@ namespace sg.gov.ndi.MyInfoConnector
         /// </remarks>
         public string PublicCertificateFilename { get; set; }
 
-        public string ClientAppId { get; set; }
+        public string ClientId { get; set; }
 
-        public string ClientAppPassword { get; set; }
+        public string ClientSecret { get; set; }
 
         public string AttributeCsv { get; set; }
 
@@ -64,8 +64,8 @@ namespace sg.gov.ndi.MyInfoConnector
         {
             if (_x509private == null)
             {
-                var filePath = ResolvePath(PrivateCertificateFilename);
-                _x509private = new X509Certificate2(filePath, PrivateCertificatePassword, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
+                var filePath = ResolvePath(PrivateKeyFilename);
+                _x509private = new X509Certificate2(filePath, PrivateKeyPassword, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.Exportable);
             }
             var privateKey = _x509private.PrivateKey as RSACryptoServiceProvider;
             return privateKey;
@@ -121,18 +121,18 @@ namespace sg.gov.ndi.MyInfoConnector
         {
             var messages = new List<string>();
 
-            if (string.IsNullOrEmpty(PrivateCertificateFilename)) messages.Add($"PrivateCertificateFilename missing or empty");
-            if (string.IsNullOrEmpty(PrivateCertificatePassword)) messages.Add($"PrivateCertificatePassword missing or empty");
-            if (string.IsNullOrEmpty(PublicCertificateFilename)) messages.Add($"PublicCertificateFilename missing or empty");
-            if (string.IsNullOrEmpty(ClientAppId)) messages.Add($"ClientAppId missing or empty");
-            if (string.IsNullOrEmpty(ClientAppPassword)) messages.Add($"ClientAppPassword missing or empty");
-            if (string.IsNullOrEmpty(AttributeCsv)) messages.Add($"AttributeCsv missing or empty");
-            if (string.IsNullOrEmpty(Environment)) messages.Add($"Environment missing or empty");
-            if (string.IsNullOrEmpty(TokenUrl)) messages.Add($"TokenUrl missing or empty");
-            if (string.IsNullOrEmpty(PersonUrl)) messages.Add($"PersonUrl missing or empty");
+            if (string.IsNullOrEmpty(PrivateKeyFilename)) messages.Add("PrivateKeyFilename missing or empty");
+            if (string.IsNullOrEmpty(PrivateKeyPassword)) messages.Add("PrivateKeyPassword missing or empty");
+            if (string.IsNullOrEmpty(PublicCertificateFilename)) messages.Add("PublicCertificateFilename missing or empty");
+            if (string.IsNullOrEmpty(ClientId)) messages.Add("ClientAppId missing or empty");
+            if (string.IsNullOrEmpty(ClientSecret)) messages.Add("ClientAppPassword missing or empty");
+            if (string.IsNullOrEmpty(AttributeCsv)) messages.Add("AttributeCsv missing or empty");
+            if (string.IsNullOrEmpty(Environment)) messages.Add("Environment missing or empty");
+            if (string.IsNullOrEmpty(TokenUrl)) messages.Add("TokenUrl missing or empty");
+            if (string.IsNullOrEmpty(PersonUrl)) messages.Add("PersonUrl missing or empty");
 
 
-            if (!string.IsNullOrEmpty(PrivateCertificateFilename))
+            if (!string.IsNullOrEmpty(PrivateKeyFilename))
             {
                 try
                 {
@@ -140,7 +140,7 @@ namespace sg.gov.ndi.MyInfoConnector
                 }
                 catch (Exception e)
                 {
-                    messages.Add("PrivateCertificateFilename failed to load - " + e.Message);
+                    messages.Add("PrivateKeyFilename failed to load - " + e.Message);
                 }
             }
 
@@ -171,7 +171,7 @@ namespace sg.gov.ndi.MyInfoConnector
 
             messages.Add($"Our private certificate SerialNumber={_x509private.SerialNumber}, Thumbprint={_x509private.Thumbprint}");
             messages.Add($"MyInfo public certificate SerialNumber={_x509public.SerialNumber}, Thumbprint={_x509public.Thumbprint}");
-            messages.Add($"ClientAppId={ClientAppId}");
+            messages.Add($"ClientAppId={ClientId}");
             messages.Add($"AuthoriseUrl={AuthoriseUrl}");
             messages.Add($"TokenUrl={TokenUrl}");
             messages.Add($"PersonUrl={PersonUrl}");
@@ -213,12 +213,12 @@ namespace sg.gov.ndi.MyInfoConnector
         {
             var output = new MyInfoConnectorConfig();
 
-            output.PrivateCertificateFilename = getSetting("PrivateCertificateFilename");
-            output.PrivateCertificatePassword = getSetting("PrivateCertificatePassword");
+            output.PrivateKeyFilename = getSetting("PrivateKeyFilename");
+            output.PrivateKeyPassword = getSetting("PrivateKeyPassword");
             output.PublicCertificateFilename = getSetting("PublicCertificateFilename");
 
-            output.ClientAppId = getSetting("ClientAppId");
-            output.ClientAppPassword = getSetting("ClientAppPassword");
+            output.ClientId = getSetting("ClientAppId");
+            output.ClientSecret = getSetting("ClientAppPassword");
             output.AttributeCsv = getSetting("AttributeCsv");
             output.Environment = getSetting("Environment");
             output.TokenUrl = getSetting("TokenUrl");

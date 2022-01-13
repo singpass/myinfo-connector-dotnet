@@ -52,8 +52,8 @@ namespace Ir.Common.UnitTest.Common.MyInfo
         public void LoadPrivateCertificate()
         {
             var config = GetSystemUnderTest();
-            config.PrivateCertificateFilename = @"Resources\certs\sandbox-demoapp.pfx";
-            config.PrivateCertificatePassword = "MyInfo2o15";
+            config.PrivateKeyFilename = @"Resources\certs\sandbox-demoapp.pfx";
+            config.PrivateKeyPassword = "MyInfo2o15";
 
             Assert.DoesNotThrow(() => config.GetPrivateKey());
         }
