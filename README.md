@@ -36,7 +36,6 @@ You are required to create a config file with the following key values for this 
 | PublicCertificateFilename | Path to the MyInfo public certificate. Absolute or relative path to assembly  |
 | ClientAppId | Unique ID provided upon approval of your application to use MyInfo. For our sample application, it is **STG2-MYINFO-SELF-TEST** |
 | ClientAppPassword | Secret key provided upon approval of your application to use MyInfo. For our sample application, it is **44d953c796cccebcec9bdc826852857ab412fbe2** |
-| RedirectUrl | The callback URL specified when invoking the authorise call. For our sample application, it is http://localhost:3001/callback |
 | AttributeCsv | Comma separated list of attributes requested. Possible attributes are listed in the Person object definition in the API specifications. |
 | Environment | The environment your application is configured. This can be **SANDBOX**, **TEST** or **PROD**. |
 | AuthoriseUrl | Specify the AUTHORISE API URL for MyInfo. The API is available in three environments:<br> SANDBOX: **https://sandbox.api.myinfo.gov.sg/com/v3/authorise**<br> TEST: **https://test.api.myinfo.gov.sg/com/v3/authorise**<br> PROD:  **https://api.myinfo.gov.sg/com/v3/authorise** |

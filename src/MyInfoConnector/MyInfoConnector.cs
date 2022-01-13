@@ -68,9 +68,9 @@ namespace sg.gov.ndi.MyInfoConnector
         /// </summary>
         public string GetPersonJson(
             string redirectUri
-            ,string authCode
-            ,string state = null
-            ,string transactionId = null)
+            , string authCode
+            , string state = null
+            , string transactionId = null)
         {
             string result;
             string jsonResponse = null;
@@ -84,10 +84,10 @@ namespace sg.gov.ndi.MyInfoConnector
             }
 
             var jObject = JObject.Parse(MyInfoSecurityHelper.DecodeToken(token).ToString());
-            string uinfin = (string) jObject.SelectToken("sub");
+            string uinfin = (string)jObject.SelectToken("sub");
 
             // GET PERSON
-            result = GetPersonJsonWorker(uinfin, "Bearer " + token,  transactionId);
+            result = GetPersonJsonWorker(uinfin, "Bearer " + token, transactionId);
 
             if (_config.Environment == ApplicationConstant.SANDBOX)
             {
@@ -101,7 +101,7 @@ namespace sg.gov.ndi.MyInfoConnector
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"{nameof(GetPersonJson)} failed to decode the encrypted result: {ex.Message}" );
+                    Console.WriteLine($"{nameof(GetPersonJson)} failed to decode the encrypted result: {ex.Message}");
                 }
             }
 
@@ -133,7 +133,7 @@ namespace sg.gov.ndi.MyInfoConnector
                 // A) Forming the Signature Base String
                 baseParams = $"{ApplicationConstant.APP_ID}={_config.ClientAppId}&{ApplicationConstant.CLIENT_ID}={_config.ClientAppId}&{ApplicationConstant.CLIENT_SECRET}={_config.ClientAppPassword}&{ApplicationConstant.CODE}={authCode}&{ApplicationConstant.GRANT_TYPE}={ApplicationConstant.AUTHORIZATION_CODE}&{ApplicationConstant.NONCE}={nonce}&{ApplicationConstant.REDIRECT_URI}={redirectUri}&{ApplicationConstant.SIGNATURE_METHOD}={ApplicationConstant.RS256}&{ApplicationConstant.STATE}={state}&{ApplicationConstant.TIMESTAMP}={timestamp}"; ;
                 baseString = MyInfoSecurityHelper.GenerateBaseString(ApplicationConstant.POST_METHOD, _config.TokenUrl, baseParams);
-                
+
                 if (!_config.IsSandbox)
                 {
                     // B) Signing Base String to get Digital Signature
@@ -168,7 +168,7 @@ namespace sg.gov.ndi.MyInfoConnector
                 Stream dataStream = request.GetRequestStream();
                 dataStream.Write(byteArray, 0, byteArray.Length);
                 request.Accept = "application/json";
-                
+
                 var response = (HttpWebResponse)request.GetResponse();
 
                 var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
@@ -224,7 +224,8 @@ State='{state}'"
                 // B) Signing Base String to get Digital Signature
                 if (baseString != null)
                 {
-                    signature = MyInfoSecurityHelper.GenerateSignature(baseString, _config.GetPrivateKey().ToXmlString(true));
+                    var privateKey = _config.GetPrivateKey().ToXmlString(true);
+                    signature = MyInfoSecurityHelper.GenerateSignature(baseString, privateKey);
                 }
 
                 // C) Assembling the Header
