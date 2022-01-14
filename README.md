@@ -34,7 +34,7 @@ You are required to create a config file with the following key values for this 
 | PrivateKeyFilename | Path of the .p12 file that holds the private key. Absolute or relative path to assembly |
 | PrivateKeyPassword | Password of your private key p12 file. |
 | PublicCertificateFilename | Path to the MyInfo public certificate. Absolute or relative path to assembly  |
-| ClientAppId | Unique ID provided upon approval of your application to use MyInfo. For our sample application, it is **STG2-MYINFO-SELF-TEST** |
+| ClientId | Unique ID provided upon approval of your application to use MyInfo. For our sample application, it is **STG2-MYINFO-SELF-TEST** |
 | ClientAppPassword | Secret key provided upon approval of your application to use MyInfo. For our sample application, it is **44d953c796cccebcec9bdc826852857ab412fbe2** |
 | AttributeCsv | Comma separated list of attributes requested. Possible attributes are listed in the Person object definition in the API specifications. |
 | Environment | The environment your application is configured. This can be **SANDBOX**, **TEST** or **PROD**. |
