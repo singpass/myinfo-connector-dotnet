@@ -4,14 +4,15 @@ MyInfo Connector aims to simplify consumer's integration effort with MyInfo by p
 
 ## Requirements
 
-.NET 4.6 and later
+.NET 4.8
 
 ### 1.1 NuGet Package Installation
 
-Add the following nuget package to your application. Right click on your solution in visualstudio and click on "Manage NuGet Packages..", search for "jose-jwt" and click on install. 
+Add the following nuget packages to your application.
 
 ```xml
 jose-jwt
+Newtonsoft.Json
 ```
 
 ### 1.2 Import Connector
@@ -23,47 +24,54 @@ namespace sg.gov.ndi;
 ```
 
 ### 1.3 Configuration file
+
+Config can be supplied in a number of ways, app.config, NameValueCollection or by passing a `Func<string,string>`.
+
 You are required to create a config file with the following key values for this library. Sample config files can be found in this repository under the Sample Configuration folder.
+
 | Required config values | Description |
 | -------- | ----------- |
-| CLIENT_SECURE_CERT | Absolute path of the .p12 file that holds the private key. |
-| CLIENT_SECURE_CERT_PASSPHRASEE | Password of your private key p12 file. |
-| MYINFO_SIGNATURE_CERT_PUBLIC_CERT | Absolute path of the MyInfo public certificate in PEM format.  |
-| CLIENT_ID | Unique ID provided upon approval of your application to use MyInfo. For our sample application, it is **STG2-MYINFO-SELF-TEST** |
-| CLIENT_SECRET | Secret key provided upon approval of your application to use MyInfo. For our sample application, it is **44d953c796cccebcec9bdc826852857ab412fbe2** |
-| REDIRECT_URL | The callback URL specified when invoking the authorise call. For our sample application, it is http://localhost:3001/callback |
-| ATTRIBUTES | Comma separated list of attributes requested. Possible attributes are listed in the Person object definition in the API specifications. |
-| ENVIRONMENT | The environment your application is configured. This can be **SANDBOX**, **TEST** or **PROD**. |
-| TOKEN_URL | Specify the TOKEN API URL for MyInfo. The API is available in three environments:<br> SANDBOX: **https://sandbox.api.myinfo.gov.sg/com/v3/token**<br> TEST: **https://test.api.myinfo.gov.sg/com/v3/token**<br> PROD:  **https://api.myinfo.gov.sg/com/v3/token** |
-| PERSON_URL | Specify the PERSON API URL for MyInfo. The API is available in three environments:<br> SANDBOX: **https://sandbox.api.myinfo.gov.sg/com/v3/person**<br> TEST: **https://test.api.myinfo.gov.sg/com/v3/person**<br> PROD:  **https://api.myinfo.gov.sg/com/v3/person** |
-| USE_PROXY | Indicate the use of proxy url. It can be either **Y** or **N**. |
-| PROXY_TOKEN_URL | If you are using a proxy url, specify the proxy URL for TOKEN API here. |
-| PROXY_PERSON_URL | If you are using a proxy url, specify the proxy URL for PERSON API here. |
+| PrivateKeyFilename | Path of the .p12 file that holds the private key. Absolute or relative path to assembly |
+| PrivateKeyPassword | Password of your private key p12 file. |
+| PublicCertificateFilename | Path to the MyInfo public certificate. Absolute or relative path to assembly  |
+| ClientId | Unique ID provided upon approval of your application to use MyInfo. For our sample application, it is **STG2-MYINFO-SELF-TEST** |
+| ClientSecret | Secret key provided upon approval of your application to use MyInfo. For our sample application, it is **44d953c796cccebcec9bdc826852857ab412fbe2** |
+| AttributeCsv | Comma separated list of attributes requested. Possible attributes are listed in the Person object definition in the API specifications. |
+| Environment | The environment your application is configured. This can be **SANDBOX**, **TEST** or **PROD**. |
+| AuthoriseUrl | Specify the AUTHORISE API URL for MyInfo. The API is available in three environments:<br> SANDBOX: **https://sandbox.api.myinfo.gov.sg/com/v3/authorise**<br> TEST: **https://test.api.myinfo.gov.sg/com/v3/authorise**<br> PROD:  **https://api.myinfo.gov.sg/com/v3/authorise** |
+| TokenUrl | Specify the TOKEN API URL for MyInfo. The API is available in three environments:<br> SANDBOX: **https://sandbox.api.myinfo.gov.sg/com/v3/token**<br> TEST: **https://test.api.myinfo.gov.sg/com/v3/token**<br> PROD:  **https://api.myinfo.gov.sg/com/v3/token** |
+| PersonUrl | Specify the PERSON API URL for MyInfo. The API is available in three environments:<br> SANDBOX: **https://sandbox.api.myinfo.gov.sg/com/v3/person**<br> TEST: **https://test.api.myinfo.gov.sg/com/v3/person**<br> PROD:  **https://api.myinfo.gov.sg/com/v3/person** |
+| Purpose | The text passed to the OAuth service to inform the user about the purpose to get his/her data. This will be shown to the user when requesting for his/her consent.
 
 ## How to use the connector
 
-### 1. Get a single instance of MyInfoConnector
-
-Get a single instance of MyInfoConnector and load config file:
+### 1. Create an instance of the MyInfoConnector
 
 ```
-MyInfoConnector connector = MyInfoConnector.getInstance("C:\\MyInfoConnectorPROD.config");
+Func<string, string> getConfig = key => 
+{ 
+	// given a key, return the value. This pattern allows external methods of encryption/decryption of secrets
+};
+var connector = MyInfoConnector.Create(getConfig);
 ```
 
-Once the config file is loaded, you may retrieve the instance again with the below method:
+### 2. Construct the authorise URL 
+The authorise URL includes the redirect URL so that the service can redirect the user to it after granting consent.
+
 ```
-MyInfoConnector connector = MyInfoConnector.getCurrentInstance();
+var authoriseUrl = connector.GetAuthoriseUrl(redirectUrl);
+// Invoke the authorise endpoint with authoriseUrl. Receive the callback and get the `authcode`
 ```
 
-### 2. Retrieve person's data
+### 3. Retrieve the person's data
 Retrieve person's data by passing the authorisation code and state from the Authorise API call:
 
 ```
-connector.getMyInfoPersonData(authCode,state);
+connector.GetPersonJson(authCode, state);
 ```
 **txnNo** is an optional parameter that can be passed through the overloaded method, if required.
 ```
-connector.getMyInfoPersonData(authCode,txnNo,state);
+connector.GetPersonJson(authCode, txnNo, state);
 ```
 
 ## Helper methods
