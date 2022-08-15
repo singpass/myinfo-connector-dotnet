@@ -4,7 +4,7 @@ MyInfo Connector aims to simplify consumer's integration effort with MyInfo by p
 
 ## Requirements
 
-.NET 4.8
+.NET Framework 4.8
 
 ### 1.1 NuGet Package Installation
 
